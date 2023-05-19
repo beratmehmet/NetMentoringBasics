@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,19 +10,20 @@ namespace AdvancedC__Task1
 {
     public class FileSystemVisitor
     {
-
-        public void ProcessDirectory(string path)
+        public IEnumerable<string> Search(string sDir)
         {
-            string[] files = Directory.GetFiles(path);
-            foreach (string file in files)
+            foreach (var file in Directory.EnumerateFiles(sDir))
             {
-                ProcessFile(file);
+                //Console.WriteLine($"inside search {file}");
+                yield return file;
             }
-        }
 
-        public void ProcessFile(string path)
-        {
-            Console.WriteLine("Processed file '{0}.'", path);
+            foreach (var directory in Directory.GetDirectories(sDir))
+            {
+                Console.WriteLine($"Folder: {directory.Split("/").Last()}");
+                foreach (var file in Search(directory))
+                    yield return file;
+            }
         }
     }
 }
