@@ -1,10 +1,21 @@
 ﻿using AdvancedC__Task1;
 
-FileSystemVisitor fileSystemVisitor = new();
-//fileSystemVisitor.ProcessDirectory("/Users/Mehmet_Topuz/Desktop");
-foreach(string file in fileSystemVisitor.Search("/Users/Mehmet_Topuz/Desktop/test"))
-{
-    Console.WriteLine($"File:{file.Split("/").Last()}");
-}
+FileSystemVisitor fileSystemVisitor = new(@"C:\test",(x => Path.GetExtension(x) == ".txt"));
+fileSystemVisitor.Start += (sender, args) => Console.WriteLine("Started");
+fileSystemVisitor.Finish += (sender, args) => Console.WriteLine("Finished");
+fileSystemVisitor.DirectoryFound += EventProcessor;
+fileSystemVisitor.FileFound += EventProcessor;
+fileSystemVisitor.FilteredDirectoryFound += EventProcessor;
+fileSystemVisitor.FilteredFileFound += EventProcessor;
 
+//foreach (string file in fileSystemVisitor.SearchFiles())
+//{
+//    Console.WriteLine($"File:{file}");
+//}
+fileSystemVisitor.SearchFiles();
 Console.ReadLine();
+
+static void EventProcessor(object sender, FileSystemVisitorEventArgs args)
+{
+    Console.WriteLine($"{args.eventName} => {args.path}");
+}
