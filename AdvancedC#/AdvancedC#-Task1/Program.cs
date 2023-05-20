@@ -8,14 +8,13 @@ fileSystemVisitor.FileFound += EventProcessor;
 fileSystemVisitor.FilteredDirectoryFound += EventProcessor;
 fileSystemVisitor.FilteredFileFound += EventProcessor;
 
-//foreach (string file in fileSystemVisitor.SearchFiles())
-//{
-//    Console.WriteLine($"File:{file}");
-//}
-fileSystemVisitor.SearchFiles();
+foreach (string file in fileSystemVisitor.SearchFiles())
+{
+    Console.WriteLine($"File: {file}");
+}
 Console.ReadLine();
 
 static void EventProcessor(object sender, FileSystemVisitorEventArgs args)
 {
-    Console.WriteLine($"{args.eventName} => {args.path}");
+    Console.WriteLine($"Event: {args.eventName} => {args.path}");
 }

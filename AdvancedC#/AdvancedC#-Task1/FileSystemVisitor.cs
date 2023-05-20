@@ -25,12 +25,12 @@ namespace AdvancedC__Task1
             _searchAlgorithm = searchAlgorithm ?? (x => true);
         }
 
-        public void SearchFiles()
+        public IEnumerable<string> SearchFiles()
         {
             OnStart();
             foreach(string file in SearchFiles(rootFolder))
             {
-                Console.WriteLine($"File:{file}");
+                yield return file;
             }
             OnFinish();
         }
