@@ -37,17 +37,19 @@ namespace AdvancedC__Task1
 
         public IEnumerable<string> SearchFiles(string sDir)
         {
-
-            FileSystemVisitorEventArgs directoryArgs = new FileSystemVisitorEventArgs { path = sDir};
-            if (_searchAlgorithm(sDir))
-            {
-                OnFilteredDirectoryFound(directoryArgs);
-                yield return sDir;
-            }
             
             if (Directory.Exists(sDir))
             {
+                FileSystemVisitorEventArgs directoryArgs = new FileSystemVisitorEventArgs { path = sDir };
+
                 OnDirectoryFound(directoryArgs);
+
+                if (_searchAlgorithm(sDir))
+                {
+                    OnFilteredDirectoryFound(directoryArgs);
+                    yield return sDir;
+                }
+
                 foreach (var file in Directory.GetFiles(sDir))
                 {
                     FileSystemVisitorEventArgs fileArgs = new FileSystemVisitorEventArgs { path = file};
