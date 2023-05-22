@@ -11,24 +11,29 @@ namespace AdvancedC__Task1
 {
     public class FileSystemVisitor
     {
-        public string rootFolder;
+        private readonly string _rootFolder;
         private readonly Func<string, bool> _searchAlgorithm;
+        private readonly bool _abort;
+        private readonly Func<string, bool> _excludeAlgorithm;
         public event EventHandler<EventArgs> Start;
         public event EventHandler<EventArgs> Finish;
         public event EventHandler<FileSystemVisitorEventArgs> FileFound;
         public event EventHandler<FileSystemVisitorEventArgs> DirectoryFound;
         public event EventHandler<FileSystemVisitorEventArgs> FilteredFileFound;
         public event EventHandler<FileSystemVisitorEventArgs> FilteredDirectoryFound;
-        public FileSystemVisitor(string rootFolder, Func<string, bool> searchAlgorithm = null)
+
+        public FileSystemVisitor(string rootFolder, Func<string, bool> searchAlgorithm = null, bool abort = false, Func<string, bool> excludeAlgorithm = null)
         {
-            this.rootFolder = rootFolder;
+            _rootFolder = rootFolder;
             _searchAlgorithm = searchAlgorithm ?? (x => true);
+            _excludeAlgorithm = excludeAlgorithm ?? (x => false);
+            _abort = abort;
         }
 
         public IEnumerable<string> SearchFiles()
         {
             OnStart();
-            foreach(string file in SearchFiles(rootFolder))
+            foreach(string file in SearchFiles(_rootFolder))
             {
                 yield return file;
             }
@@ -55,10 +60,14 @@ namespace AdvancedC__Task1
                     FileSystemVisitorEventArgs fileArgs = new FileSystemVisitorEventArgs { path = file};
                     OnFileFound(fileArgs);
                     
-                    if (_searchAlgorithm(file))
+                    if (_searchAlgorithm(file) && !(_excludeAlgorithm(file)))
                     {
                         OnFilteredFileFound(fileArgs);
                         yield return file;
+                        if (_abort)
+                        {
+                            yield break;
+                        }
                     }
                 }
 
@@ -104,7 +113,5 @@ namespace AdvancedC__Task1
     {
         public string path { get ; set; }
         public string eventName { get ; set; }
-        public bool Exclude { get; set; } = false;
-        public bool Abort { get; set; } = false;
     }
 }
