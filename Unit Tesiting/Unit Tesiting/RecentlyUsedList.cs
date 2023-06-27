@@ -7,7 +7,7 @@ namespace Unit_Tesiting
         private readonly LinkedList<string> items;
         public int Count => items.Count;
 
-        public RecentlyUsedList()
+        public RecentlyUsedList(int? capacity = null)
 		{
             this.capacity = capacity;
             items = new LinkedList<string>();
@@ -22,6 +22,11 @@ namespace Unit_Tesiting
 
             items.Remove(item);
             items.AddFirst(item);
+
+            if (capacity.HasValue && items.Count > capacity.Value)
+            {
+                items.RemoveLast();
+            }
         }
 
         public string this[int index]
