@@ -17,6 +17,19 @@ namespace Unit_Tesiting
         {
             items.AddFirst(item);
         }
+
+        public string this[int index]
+        {
+            get
+            {
+                var currentNode = items.First;
+                for (int i = 0; i < index; i++)
+                {
+                    currentNode = currentNode.Next;
+                }
+                return currentNode.Value;
+            }
+        }
     }
 }
 
