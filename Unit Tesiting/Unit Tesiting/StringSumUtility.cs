@@ -11,11 +11,11 @@ namespace Unit_Tesiting
         }
         private static int ConvertToNaturalNumber(string num)
         {
-            if (string.IsNullOrEmpty(num))
+            if (int.TryParse(num, out int number) && number >= 0)
             {
-                return 0;
+                return number;
             }
-            return int.Parse(num);
+            return 0;
         }
     }
 }
