@@ -33,6 +33,11 @@ namespace Unit_Tesiting
         {
             get
             {
+                if (index < 0 || index >= items.Count)
+                {
+                    throw new ArgumentOutOfRangeException("Index out of range.");
+                }
+
                 var currentNode = items.First;
                 for (int i = 0; i < index; i++)
                 {
