@@ -14,6 +14,8 @@ namespace UnitTestingTests
             list.Add("item2");
 
             Assert.Equal(2, list.Count);
+            Assert.Equal("item2", list[0]);
+            Assert.Equal("item1", list[1]);
         }
     }
 }
