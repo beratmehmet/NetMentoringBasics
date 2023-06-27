@@ -7,9 +7,17 @@ namespace Unit_Tesiting
 		{
 			for (int i = 1; i <= 100; i++)
 			{
-				yield return i.ToString();
+                if (i % 2 == 0)
+                {
+                    yield return "Even";
+                }
+                else
+                {
+                    yield return i.ToString();
+                }
+                
 			}
 		}
-	}
+    }
 }
 
