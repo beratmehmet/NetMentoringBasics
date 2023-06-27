@@ -40,6 +40,20 @@ namespace UnitTestingTests
 
             Assert.Equal(0, list.Count);
         }
+
+        [Fact]
+        public void Add_MoreItemsThanBoundedCapacity_LeastRecentlyAddedRemoved()
+        {
+            var list = new RecentlyUsedList(capacity: 2);
+
+            list.Add("item1");
+            list.Add("item2");
+            list.Add("item3");
+
+            Assert.Equal(2, list.Count);
+            Assert.Equal("item3", list[0]);
+            Assert.Equal("item2", list[1]);
+        }
     }
 }
 
