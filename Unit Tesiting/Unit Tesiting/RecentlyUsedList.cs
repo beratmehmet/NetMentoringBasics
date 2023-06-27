@@ -15,6 +15,7 @@ namespace Unit_Tesiting
 
         public void Add(string item)
         {
+            items.Remove(item);
             items.AddFirst(item);
         }
 
