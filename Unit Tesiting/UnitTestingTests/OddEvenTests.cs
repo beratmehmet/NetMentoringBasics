@@ -16,12 +16,10 @@ namespace UnitTestingTests
         [Fact]
         public void GetNumberType_Values()
         {
-            IEnumerable<string> numberType = OddEven.GetNumberType();
-            List<int> expectedValuesInt = new List<int>();
-            expectedValuesInt.AddRange(Enumerable.Range(1, 100));
-            List<string> expectedValuesStr = expectedValuesInt.ConvertAll<string>(x => x.ToString());
+            IEnumerable<string> numberType = OddEven.GetNumberType().Take(9);
+            List<string> expectedValues = new List<string>(){"1","Even","3","Even","5","Even","7","Even","9" };
             
-            Assert.Equal(expectedValuesStr, numberType.ToList());
+            Assert.Equal(expectedValues, numberType.ToList());
         }
     }
 }
