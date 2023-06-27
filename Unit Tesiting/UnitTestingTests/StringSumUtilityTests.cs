@@ -30,6 +30,14 @@ namespace UnitTestingTests
             Assert.Equal("2", result1);
             Assert.Equal("25", result2);
         }
+
+        [Fact]
+        public void Sum_LargeNumbers_ReturnsSum()
+        {
+            string result = StringSumUtility.Sum("1073741823", "1073741824");
+
+            Assert.Equal("2147483647", result);
+        }
     }
 }
 
