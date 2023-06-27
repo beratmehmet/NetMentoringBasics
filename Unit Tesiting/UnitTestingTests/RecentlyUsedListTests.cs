@@ -54,6 +54,17 @@ namespace UnitTestingTests
             Assert.Equal("item3", list[0]);
             Assert.Equal("item2", list[1]);
         }
+
+        [Fact]
+        public void Add_InvalidIndex_IndexOutOfRange()
+        {
+            var list = new RecentlyUsedList();
+
+            list.Add("item1");
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => list[-1]);
+            Assert.Throws<ArgumentOutOfRangeException>(() => list[1]);
+        }
     }
 }
 
