@@ -5,8 +5,18 @@ namespace Unit_Tesiting
 	{
 		public static string Sum(string num1, string num2)
 		{
-			throw new NotImplementedException();
-		}
-	}
+            int number1 = ConvertToNaturalNumber(num1);
+            int number2 = ConvertToNaturalNumber(num2);
+            return (number1 + number2).ToString();
+        }
+        private static int ConvertToNaturalNumber(string num)
+        {
+            if (string.IsNullOrEmpty(num))
+            {
+                return 0;
+            }
+            return int.Parse(num);
+        }
+    }
 }
 
