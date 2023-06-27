@@ -15,6 +15,11 @@ namespace Unit_Tesiting
 
         public void Add(string item)
         {
+            if (string.IsNullOrEmpty(item))
+            {
+                return;
+            }
+
             items.Remove(item);
             items.AddFirst(item);
         }
