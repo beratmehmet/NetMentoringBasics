@@ -7,7 +7,11 @@ namespace Unit_Tesiting
 		{
 			for (int i = 1; i <= 100; i++)
 			{
-                if (i % 2 == 0)
+                if (IsPrime(i))
+                {
+                    yield return i.ToString();
+                }
+                else if (i % 2 == 0)
                 {
                     yield return "Even";
                 }
@@ -18,6 +22,24 @@ namespace Unit_Tesiting
                 
 			}
 		}
+
+        private static bool IsPrime(int number)
+        {
+            if (number <= 1)
+            {
+                return false;
+            }
+
+            for (int i = 2; i * i <= number; i++)
+            {
+                if (number % i == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
 
