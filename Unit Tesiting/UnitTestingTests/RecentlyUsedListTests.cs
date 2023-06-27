@@ -17,6 +17,18 @@ namespace UnitTestingTests
             Assert.Equal("item2", list[0]);
             Assert.Equal("item1", list[1]);
         }
+
+        [Fact]
+        public void Add_DuplicateItem_ItemMovedToLowerBound()
+        {
+            var list = new RecentlyUsedList();
+
+            list.Add("item");
+            list.Add("item");
+
+            Assert.Equal(1, list.Count);
+            Assert.Equal("item", list[0]);
+        }
     }
 }
 
