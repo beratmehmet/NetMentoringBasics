@@ -12,6 +12,11 @@ namespace Unit_Tesiting
             this.capacity = capacity;
             items = new LinkedList<string>();
         }
-	}
+
+        public void Add(string item)
+        {
+            items.AddFirst(item);
+        }
+    }
 }
 
