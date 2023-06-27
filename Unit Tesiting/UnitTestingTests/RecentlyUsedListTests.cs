@@ -29,6 +29,17 @@ namespace UnitTestingTests
             Assert.Equal(1, list.Count);
             Assert.Equal("item", list[0]);
         }
+
+        [Fact]
+        public void Add_NullAndEmptyItems_CountNotIncreased()
+        {
+            var list = new RecentlyUsedList();
+
+            list.Add(null);
+            list.Add("");
+
+            Assert.Equal(0, list.Count);
+        }
     }
 }
 
