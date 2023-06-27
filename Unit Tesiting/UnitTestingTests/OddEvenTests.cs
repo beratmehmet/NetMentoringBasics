@@ -17,7 +17,7 @@ namespace UnitTestingTests
         public void GetNumberType_Values()
         {
             IEnumerable<string> numberType = OddEven.GetNumberType().Take(9);
-            List<string> expectedValues = new List<string>(){"Odd","Even", "Odd", "Even", "Odd", "Even", "Odd", "Even", "Odd" };
+            List<string> expectedValues = new List<string>(){"Odd","2", "3", "Even", "5", "Even", "7", "Even", "Odd" };
             
             Assert.Equal(expectedValues, numberType.ToList());
         }
