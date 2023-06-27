@@ -13,7 +13,7 @@ namespace Unit_Tesiting
                 }
                 else
                 {
-                    yield return i.ToString();
+                    yield return "Odd";
                 }
                 
 			}
