@@ -21,4 +21,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Unit Tesiting\Unit Tesiting.csproj" />
+  </ItemGroup>
 </Project>
