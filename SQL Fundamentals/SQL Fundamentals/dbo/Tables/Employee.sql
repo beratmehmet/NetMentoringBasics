@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Employee]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	AddressId int NOT NULL FOREIGN KEY REFERENCES Address(Id),
+	PersonID int NOT NULL FOREIGN KEY REFERENCES Person(Id),
+	CompanyName NVARCHAR(20) NOT NULL,
+	Position NVARCHAR(30) Null,
+	EmployeeName NVARCHAR(100) NULL
+)
