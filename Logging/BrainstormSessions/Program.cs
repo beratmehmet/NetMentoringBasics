@@ -3,7 +3,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Formatting.Json;
+using Serilog.Sinks.Email;
 using System;
+using System.Net;
 
 namespace BrainstormSessions
 {
@@ -12,10 +14,29 @@ namespace BrainstormSessions
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.File(new JsonFormatter(), @"c:\temp\bmt.log", shared: true)
+                .WriteTo.Console()
+                .WriteTo.File(formatter: new JsonFormatter(),
+                path: @"c:\temp\bmt.log",
+                shared: true)
+                .WriteTo.Email(new EmailConnectionInfo
+                {
+                    FromEmail = "",
+                    ToEmail = "",
+                    MailServer = "smtp.gmail.com",
+                    NetworkCredentials = new NetworkCredential
+                    {
+                        UserName = "",
+                        Password = ""
+                    },
+                    EnableSsl = true,
+                    Port = 465,
+                    EmailSubject = "Logs"
+                },
+                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}",
+                batchPostingLimit: 10,
+                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
+                )
                 .CreateLogger();
             try
             {
