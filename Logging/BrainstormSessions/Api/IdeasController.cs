@@ -6,16 +6,20 @@ using BrainstormSessions.ClientModels;
 using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace BrainstormSessions.Api
 {
     public class IdeasController : ControllerBase
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private readonly ILogger<IdeasController> _logger;
 
-        public IdeasController(IBrainstormSessionRepository sessionRepository)
+        public IdeasController(IBrainstormSessionRepository sessionRepository, ILogger<IdeasController> logger = null)
         {
             _sessionRepository = sessionRepository;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         #region snippet_ForSessionAndCreate
@@ -101,6 +105,7 @@ namespace BrainstormSessions.Api
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError(ModelState.ToString());
                 return BadRequest(ModelState);
             }
 

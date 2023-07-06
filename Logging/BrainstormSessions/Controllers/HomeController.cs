@@ -6,22 +6,25 @@ using BrainstormSessions.Core.Interfaces;
 using BrainstormSessions.Core.Model;
 using BrainstormSessions.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace BrainstormSessions.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IBrainstormSessionRepository _sessionRepository;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IBrainstormSessionRepository sessionRepository)
+        public HomeController(IBrainstormSessionRepository sessionRepository, ILogger<HomeController> logger)
         {
             _sessionRepository = sessionRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Session being created");
             var sessionList = await _sessionRepository.ListAsync();
-
             var model = sessionList.Select(session => new StormSessionViewModel()
             {
                 Id = session.Id,
@@ -29,6 +32,7 @@ namespace BrainstormSessions.Controllers
                 Name = session.Name,
                 IdeaCount = session.Ideas.Count
             });
+            _logger.LogInformation("Session created");
 
             return View(model);
         }
@@ -44,6 +48,7 @@ namespace BrainstormSessions.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning(ModelState.ToString());
                 return BadRequest(ModelState);
             }
             else
