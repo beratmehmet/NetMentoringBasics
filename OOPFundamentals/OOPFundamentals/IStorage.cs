@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OOPFundamentals.Entities;
+﻿using OOPFundamentals.Entities;
 
 namespace OOPFundamentals
 {
     internal interface IStorage
     {
-        public List<Document> Read();
+        public Document Read(string fileName);
 
         public void Write(Document document);
 
-        public List<string> Search(int documentNumber);
+        public List<Document> Search(int documentNumber);
     }
 }

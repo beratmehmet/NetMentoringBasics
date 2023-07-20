@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace OOPFundamentals.Entities
 {
     internal class LocalizedBook : Book
@@ -7,7 +9,10 @@ namespace OOPFundamentals.Entities
 
         public string CountryOfLocalization { get; set; }
 
-        public LocalizedBook(string title, string[] authors, DateTime datePublished, PublicationType publicationType, int numberOfPages, string originalPublisher, string localPublisher, string countryOfLocalization) : base(title, authors, datePublished, publicationType, numberOfPages, originalPublisher)
+        [JsonIgnore]
+        public override Type _documentType => typeof(LocalizedBook);
+
+        public LocalizedBook(string title, string[] authors, DateTime datePublished, int numberOfPages, string originalPublisher, string localPublisher, string countryOfLocalization) : base(title, authors, datePublished, numberOfPages, originalPublisher)
         {
             LocalPublisher = localPublisher;
             CountryOfLocalization = countryOfLocalization;

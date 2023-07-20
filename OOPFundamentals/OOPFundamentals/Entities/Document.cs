@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace OOPFundamentals.Entities
 {
-    public enum PublicationType { Patent, Book, LocalizedBook };
     public abstract class Document
     {
         public int ID { get; set; }
@@ -18,21 +17,21 @@ namespace OOPFundamentals.Entities
 
         public string[] Authors { get; set; }
 
+        [JsonIgnore]
         DateTime DatePublished { get; set; }
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public PublicationType PublicationType { get; set; }
+        [JsonIgnore]
+        public abstract Type _documentType { get; }
 
-        public Document(string title, string[] authors, DateTime datePublished, PublicationType publicationType)
+        public string DocumentType { get => _documentType.Name; }
+
+        public Document(string title, string[] authors, DateTime datePublished, int id, string documentType = null)
         {
             Title = title;
             Authors = authors;
             DatePublished = datePublished;
-            PublicationType = publicationType;
             ID = Interlocked.Increment(ref nextID);
 
         }
-
-
     }
 }
