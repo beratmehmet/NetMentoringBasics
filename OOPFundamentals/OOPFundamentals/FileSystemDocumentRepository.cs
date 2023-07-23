@@ -1,7 +1,6 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Unicode;
+using System.Text.Json.Serialization;
 using OOPFundamentals.Entities;
 
 namespace OOPFundamentals
@@ -12,13 +11,15 @@ namespace OOPFundamentals
         {
             var jsonString = File.ReadAllText(fileName);
             JsonNode jsonNode = JsonNode.Parse(jsonString);
-            string documentType = (string)jsonNode!["DocumentType"];
+            string documentType = (string)jsonNode!["documentType"];
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
                 IncludeFields = true,
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                PropertyNameCaseInsensitive = true };
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                //PropertyNameCaseInsensitive = true,
+                //Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)},
+            };
             Document document;
 
             switch (documentType)
@@ -33,7 +34,7 @@ namespace OOPFundamentals
                     document = jsonNode.Deserialize<LocalizedBook>(options);
                     break;
                 default:
-                    throw new InvalidOperationException("Invalid type value in JSON.");
+                    throw new InvalidOperationException("Invalid Document Type");
             }
             return document;
         }
@@ -56,7 +57,11 @@ namespace OOPFundamentals
         public void Write(Document document)
         {
             string fileName = $"{document.DocumentType}_#{document.ID}.json";
-            var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true, Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) };
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                IncludeFields = true,
+            };
             string jsonString = JsonSerializer.Serialize<object>(document, options);
             File.WriteAllText(fileName, jsonString);
         }

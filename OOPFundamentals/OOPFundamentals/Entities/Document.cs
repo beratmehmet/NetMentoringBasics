@@ -1,37 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace OOPFundamentals.Entities
 {
     public abstract class Document
     {
+        [JsonPropertyName("id")]
         public int ID { get; set; }
 
+        [JsonIgnore]
         static int nextID;
 
+        [JsonPropertyName("title")]
         public string Title { get; set; }
 
-        public string[] Authors { get; set; }
+        [JsonPropertyName("authors")]
+        public List<string> Authors { get; set; }
 
-        [JsonIgnore]
-        DateTime DatePublished { get; set; }
+        [JsonPropertyName("datePublished")]
+        public DateTime DatePublished { get; set; }
 
         [JsonIgnore]
         public abstract Type _documentType { get; }
 
+        [JsonPropertyName("documentType")]
         public string DocumentType { get => _documentType.Name; }
 
-        public Document(string title, string[] authors, DateTime datePublished, int id, string documentType = null)
+        [JsonConstructor]
+        public Document(string title, List<string> authors, DateTime datePublished)
         {
-            Title = title;
-            Authors = authors;
-            DatePublished = datePublished;
-            ID = Interlocked.Increment(ref nextID);
+            this.Title = title;
+            this.Authors = authors ?? new List<string>();
+            this.DatePublished = DateTime.Now;
+            this.ID = Interlocked.Increment(ref nextID);
 
+        }
+
+        public override string? ToString()
+        {
+            StringBuilder authorsString = new StringBuilder();
+            authorsString.AppendLine();
+            foreach (string author in Authors)
+                authorsString.AppendLine("\t" + author);
+            return $"Document Type:{DocumentType}\nID: {ID}\nTitle: {Title}\nDate Published: {DatePublished}\nAuthors: {authorsString}";
         }
     }
 }

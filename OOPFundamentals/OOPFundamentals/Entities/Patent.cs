@@ -4,20 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace OOPFundamentals.Entities
 {
     internal class Patent : Document
     {
-        [JsonIgnore]
-        DateTimeOffset ExpirationDate { get; set; }
+        [JsonPropertyName("expirationDate")]
+        public DateTime ExpirationDate { get; set; }
 
         [JsonIgnore]
         public override Type _documentType => typeof(Patent);
 
-        public Patent(string title, string[] authors, DateTime datePublished, DateTime expirationDate) : base(title, authors, datePublished, 1)
+        public Patent(
+            string title,
+            List<string> authors,
+            DateTime datePublished,
+            DateTime expirationDate) : base(title, authors, datePublished)
         {
             ExpirationDate = expirationDate;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"\nExpiration Date: {ExpirationDate}";
         }
     }
 }
