@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Caching;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -26,6 +27,9 @@ namespace OOPFundamentals.Entities
 
         [JsonPropertyName("documentType")]
         public string DocumentType { get => _documentType.Name; }
+
+        [JsonIgnore]
+        public virtual CacheItemPolicy CacheItemPolicy => new CacheItemPolicy();
 
         [JsonConstructor]
         public Document(string title, List<string> authors, DateTime datePublished)
