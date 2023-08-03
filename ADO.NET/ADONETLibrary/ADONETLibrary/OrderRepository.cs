@@ -147,5 +147,57 @@ namespace ADONETLibrary
                 return order;
             }
         }
+
+        public DataSet GetAllOrders()
+        {
+            DataSet ordersProducts = new DataSet();
+
+
+            using (var connection = new SqlConnection(DBConfig.ConnectionString))
+            using (SqlDataAdapter orderAdapter = new("SELECT * FROM \"Order\"; SELECT * FROM Product", connection))
+            {
+
+                orderAdapter.TableMappings.Add("Table", "Order");
+                orderAdapter.TableMappings.Add("Table1", "Product");
+
+                orderAdapter.Fill(ordersProducts);
+
+                DataColumn ordersProductId = ordersProducts.Tables["Order"].Columns["ProductId"];
+                DataColumn productsId = ordersProducts.Tables["Product"].Columns["Id"];
+                DataRelation relation = new("Product_Order", productsId, ordersProductId);
+                ordersProducts.Relations.Add(relation);
+
+            }
+
+
+
+            return ordersProducts;
+        }
+
+        public DataTable GetOrdersByFilter(int? month = null, int? year = null, string status = null, int? productId = null)
+        {
+            DataTable orders = new DataTable();
+
+            using (var connection = new SqlConnection(DBConfig.ConnectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("GetOrdersByFilter", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Month", SqlDbType.Int).Value = (object)month ?? DBNull.Value;
+                    command.Parameters.Add("@Year", SqlDbType.Int).Value = (object)year ?? DBNull.Value;
+                    command.Parameters.Add("@Status", SqlDbType.NVarChar).Value = (object)status ?? DBNull.Value;
+                    command.Parameters.Add("@ProductId", SqlDbType.Int).Value = (object)productId ?? DBNull.Value;
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(orders);
+                    }
+                }
+            }
+            return orders;
+        }
     }
 }
