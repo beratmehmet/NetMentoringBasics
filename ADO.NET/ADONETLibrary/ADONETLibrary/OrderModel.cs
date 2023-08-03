@@ -12,7 +12,11 @@ namespace ADONETLibrary
         public string Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public int ProductId { get; set; }
+        public ProductModel product { get; set; }
 
+        public override string? ToString()
+        {
+            return $"ID: {Id}, Status: {Status}, CreatedDate: {CreatedDate}, UpdatedDate: {UpdatedDate},\n\t Product: {product}";
+        }
     }
 }
