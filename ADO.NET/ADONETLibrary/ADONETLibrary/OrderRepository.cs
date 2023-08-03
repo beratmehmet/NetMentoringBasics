@@ -199,5 +199,45 @@ namespace ADONETLibrary
             }
             return orders;
         }
+
+        public DataTable DeleteOrdersByFilter(int? month = null, int? year = null, string status = null, int? productId = null, int batchSize = 7)
+        {
+            DataTable orders = new DataTable();
+            string selectCommand = "SELECT * FROM[Order] ";
+
+            string deleteCommand = "DELETE FROM \"Order\" " +
+                "WHERE (@Month IS NULL OR MONTH(CreatedDate) = @Month) " +
+                "AND (@Year IS NULL OR YEAR(CreatedDate) = @Year) " +
+                "AND (@Status IS NULL OR Status = @Status) " +
+                "AND (@ProductId IS NULL OR ProductId = @ProductId)";
+
+            using (var connection = new SqlConnection(DBConfig.ConnectionString))
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(selectCommand, connection);
+
+                adapter.Fill(orders);
+
+                adapter.DeleteCommand = new SqlCommand(deleteCommand, connection);
+
+                adapter.DeleteCommand.Parameters.Add("@Month", SqlDbType.Int).Value = (object)month ?? DBNull.Value;
+                adapter.DeleteCommand.Parameters.Add("@Year", SqlDbType.Int).Value = (object)year ?? DBNull.Value;
+                adapter.DeleteCommand.Parameters.Add("@Status", SqlDbType.NVarChar).Value = (object)status ?? DBNull.Value;
+                adapter.DeleteCommand.Parameters.Add("@ProductId", SqlDbType.Int).Value = (object)productId ?? DBNull.Value;
+                adapter.DeleteCommand.UpdatedRowSource = UpdateRowSource.None;
+
+                adapter.UpdateBatchSize = batchSize;
+
+                foreach(DataRow row in orders.Rows)
+                {
+                    row.Delete();
+                }
+
+                adapter.Update(orders);
+
+                adapter.Dispose();
+                
+            }
+            return orders;
+        }
     }
 }
