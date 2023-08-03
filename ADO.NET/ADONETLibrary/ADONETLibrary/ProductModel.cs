@@ -16,5 +16,11 @@ namespace ADONETLibrary
         public double Width { get; set; }
         public double Length { get; set; }
 
+        public override string? ToString()
+        {
+            return $"ID: {Id}, Name: {Name}, Description: {Description}, Weight: {Weight}, Height: {Height}, Width: {Width}, Length: {Length}";
+        }
     }
+
+
 }
