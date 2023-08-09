@@ -22,6 +22,8 @@ namespace ORMFundamentals.Entities
 
         public double Length { get; set; }
 
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+
         public override string? ToString()
         {
             return $"ID: {Id}, Name: {Name}, Description: {Description}, Weight: {Weight}, Height: {Height}, Width: {Width}, Length: {Length}";
