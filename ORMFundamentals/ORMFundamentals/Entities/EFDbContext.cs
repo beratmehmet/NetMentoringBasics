@@ -18,5 +18,18 @@ namespace ORMFundamentals.Entities
                 @"Server=(localdb)\mssqllocaldb;Database=ORMFundamentalsDb;"
                 + "Trusted_Connection=True;");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .Property(o => o.CreatedDate)
+                .HasDefaultValueSql("getDate()");
+
+            modelBuilder.Entity<Order>()
+                .HasOne(p => p.Product)
+                .WithMany(p => p.Orders)
+                .HasForeignKey(p => p.ProductId)
+                .IsRequired();
+        }
     }
 }
