@@ -12,7 +12,7 @@ using ORMFundamentals.Entities;
 namespace ORMFundamentals.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20230809201430_InitialMigration")]
+    [Migration("20230809220921_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -34,7 +34,12 @@ namespace ORMFundamentals.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getDate()");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -43,12 +48,9 @@ namespace ORMFundamentals.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("productId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("productId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Orders");
                 });
@@ -88,13 +90,18 @@ namespace ORMFundamentals.Migrations
 
             modelBuilder.Entity("ORMFundamentals.Entities.Order", b =>
                 {
-                    b.HasOne("ORMFundamentals.Entities.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productId")
+                    b.HasOne("ORMFundamentals.Entities.Product", "Product")
+                        .WithMany("Orders")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("product");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ORMFundamentals.Entities.Product", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
