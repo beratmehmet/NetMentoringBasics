@@ -41,7 +41,7 @@ namespace ORMFundamentals.Repos
         {
             using (var db = new EFDbContext())
             {
-                return db.Products.Where(x => x.Id == id).FirstOrDefault();
+                return db.Products.Single(x => x.Id == id);
             }
         }
 
