@@ -6,12 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<SettingsModel>(builder.Configuration.GetSection("MySettings"));
 builder.Services.AddDbContext<MvcprinciplesContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MVCPDb"));
+    options.UseSqlServer(builder.Configuration.GetValue<string>("MySettings:ConnectionString"));
 });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
