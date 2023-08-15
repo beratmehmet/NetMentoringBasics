@@ -5,14 +5,14 @@ namespace MVCPrinciples.Controllers
 {
     public class CategoryController : Controller
     {
-        private MvcprinciplesContext _db;
-        public CategoryController(MvcprinciplesContext db)
+        private ICategoryRepository _categoryRepository;
+        public CategoryController(ICategoryRepository categoryRepository)
         {
-            _db = db;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult Index()
         {
-            var categories = _db.Categories.ToArray();
+            var categories = _categoryRepository.GetCategories;
             return View(categories);
         }
     }

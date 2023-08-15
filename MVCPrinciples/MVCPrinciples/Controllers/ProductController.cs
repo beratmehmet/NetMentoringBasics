@@ -7,30 +7,19 @@ namespace MVCPrinciples.Controllers
 {
     public class ProductController : Controller
     {
-
-        private MvcprinciplesContext _db;
-
         private readonly SettingsModel _settings;
 
-        public ProductController(MvcprinciplesContext db, IOptions<SettingsModel> options)
+        private readonly IProductRepository _productRepository;
+        public ProductController(IOptions<SettingsModel> options, IProductRepository productRepository)
         {
-            _db = db;
 
             _settings = options.Value;
-
+            _productRepository = productRepository;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products;
-            if (_settings.NumberOfProducts > 0 )
-            {
-                products = _db.Products.Include(p => p.Supplier).Include(p => p.Category).Take(_settings.NumberOfProducts).ToList();
-            }
-            else
-            {
-                products = _db.Products.Include(p => p.Supplier).Include(p => p.Category).ToList();
-            }
+            IEnumerable<Product> products = _productRepository.LimitedProducts(_settings.NumberOfProducts);
             return View(products);
         }
     }

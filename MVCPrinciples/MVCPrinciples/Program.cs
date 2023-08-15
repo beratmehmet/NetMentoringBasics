@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<SettingsModel>(builder.Configuration.GetSection("MySettings"));
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 builder.Services.AddDbContext<MvcprinciplesContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetValue<string>("MySettings:ConnectionString"));
