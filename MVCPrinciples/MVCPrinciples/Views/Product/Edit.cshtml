@@ -55,7 +55,7 @@
         <p>
             <label asp-for="CategoryId">Category</label>
             <select asp-for="CategoryId" class="form-select" placeholder="Category">
-                @await Component.InvokeAsync("CategoryDropdown")
+                @await Component.InvokeAsync("CategoryDropdown", new {id = Model.CategoryId})
             </select>
             <span asp-validation-for="CategoryId"></span>
         </p>
@@ -63,7 +63,7 @@
         <p>
             <label asp-for="SupplierId">Supplier</label>
             <select asp-for="SupplierId" class="form-select" placeholder="Supplier">
-                @await Component.InvokeAsync("SupplierDropdown")
+                @await Component.InvokeAsync("SupplierDropdown", new {id = Model.SupplierId})
             </select>
             <span asp-validation-for="SupplierId"></span>
         </p>

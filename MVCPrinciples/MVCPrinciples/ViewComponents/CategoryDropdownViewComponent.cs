@@ -13,9 +13,12 @@ namespace MVCPrinciples.ViewComponents
 			_db = db;
 		}
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync(int id = -1)
         {
 			var categories = _db.Categories.ToList();
+
+			ViewBag.id = id;
+
             return View(categories);
         }
     }

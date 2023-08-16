@@ -1,6 +1,14 @@
 ﻿@model IEnumerable<Supplier>
 
-@foreach (var supplier in Model)
-{
-    <option value=@supplier.SupplierId>@supplier.CompanyName</option>
-}
+    @foreach (var supplier in Model)
+    {
+        if (ViewBag.id == supplier.SupplierId)
+        {
+            <option selected value=@supplier.SupplierId>@supplier.CompanyName</option>
+        }
+        else
+        {
+            <option value=@supplier.SupplierId>@supplier.CompanyName</option>
+        }
+    
+    }
