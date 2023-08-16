@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCPrinciples.Models;
 
@@ -7,14 +8,20 @@ public partial class Product
 {
     public int ProductId { get; set; }
 
+    [Required]
     public string ProductName { get; set; } = null!;
 
+    [Required]
     public int? SupplierId { get; set; }
 
+    [Required]
     public int? CategoryId { get; set; }
 
+    [Required]
+    [MaxLength(100)]
     public string? QuantityPerUnit { get; set; }
 
+    [DataType(DataType.Currency)]
     public decimal? UnitPrice { get; set; }
 
     public short? UnitsInStock { get; set; }
