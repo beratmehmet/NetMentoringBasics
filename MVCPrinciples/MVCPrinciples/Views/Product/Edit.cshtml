@@ -1,0 +1,31 @@
+﻿@model MVCPrinciples.Models.Product
+<h1>Edit @Model.ProductName</h1>
+<fieldset>
+    <form asp-action="Edit" asp-controller="Product">
+        <div asp-validation-summary="All" class="input-validation-error"></div>
+        <p>
+            <label asp-for="ProductId"></label>
+            <input asp-for="ProductId" class="form-control" placeholder="Product Id" disabled />
+            <input asp-for="ProductId" class="form-control" placeholder="Product Id" hidden />
+            <span asp-validation-for="ProductId"></span>
+        </p>
+        <p>
+            <label asp-for="ProductName"></label>
+            <input asp-for="ProductName" class="form-control" placeholder="Product Name" />
+            <span asp-validation-for="ProductName"></span>
+        </p>
+        <p>
+            <label asp-for="CategoryId"></label>
+            <input asp-for="CategoryId" class="form-control" placeholder="CategoryId" />
+            <span asp-validation-for="CategoryId"></span>
+        </p>
+        <p>
+            <label asp-for="SupplierId"></label>
+            <input asp-for="SupplierId" class="form-control" placeholder="SupplierId" />
+            <span asp-validation-for="SupplierId"></span>
+        </p>
+        <p>
+            <button type="submit">Save</button>
+        </p>
+    </form>
+</fieldset>

@@ -1,0 +1,27 @@
+﻿@model MVCPrinciples.Models.Product
+<h1>Create Blog Post</h1>
+<fieldset>
+    <form asp-action="Create" asp-controller="Product">
+        <div asp-validation-summary="All" class="input-validation-error"></div>
+        <p>
+            <label asp-for="ProductName"></label>
+            <input asp-for="ProductName" class="form-control" placeholder="Product Name" />
+            <span asp-validation-for="ProductName"></span>
+        </p>
+            <label asp-for="CategoryId"></label>
+            <select asp-for="CategoryId" class="form-control" placeholder="Category">
+                @await Component.InvokeAsync("CategoryDropdown")
+            </select>
+            <span asp-validation-for="CategoryId"></span>
+        <p>
+            <label asp-for="SupplierId"></label>
+            <select asp-for="SupplierId" class="form-control" placeholder="Supplier">
+                @await Component.InvokeAsync("SupplierDropdown")
+            </select>
+            <span asp-validation-for="SupplierId"></span>
+        </p>
+        <p>
+            <button type="submit">Create Product</button>
+        </p>
+    </form>
+</fieldset>
