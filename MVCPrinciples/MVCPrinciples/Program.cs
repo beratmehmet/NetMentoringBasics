@@ -10,10 +10,7 @@ builder.Services.Configure<SettingsModel>(builder.Configuration.GetSection("MySe
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-builder.Services.AddDbContext<MvcprinciplesContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetValue<string>("MySettings:ConnectionString"));
-});
+builder.Services.AddDbContext<MvcprinciplesContext>();
 
 var app = builder.Build();
 
