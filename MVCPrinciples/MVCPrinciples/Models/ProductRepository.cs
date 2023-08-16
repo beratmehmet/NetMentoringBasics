@@ -11,9 +11,22 @@ namespace MVCPrinciples.Models
         {
             _db = db;
         }
+
         public void Add(Product product)
         {
-            throw new NotImplementedException();
+            _db.Products.Add(product);
+            _db.SaveChanges();
+        }
+
+        public void Edit(Product product)
+        {
+            _db.Products.Update(product);
+            _db.SaveChanges();
+        }
+
+        public Product GetProductById(int productId)
+        {
+            return _db.Products.FirstOrDefault(x => x.ProductId == productId) ?? throw new Exception("Not Found");
         }
 
         public IEnumerable<Product> LimitedProducts(int numberOfProducts)
