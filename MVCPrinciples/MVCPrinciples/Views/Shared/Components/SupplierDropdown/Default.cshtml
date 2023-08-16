@@ -1,0 +1,6 @@
+﻿@model IEnumerable<Supplier>
+
+@foreach (var supplier in Model)
+{
+    <option value=@supplier.SupplierId>@supplier.CompanyName</option>
+}
