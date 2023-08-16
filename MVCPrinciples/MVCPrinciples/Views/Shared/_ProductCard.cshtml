@@ -10,5 +10,8 @@
         <td>@Model.ReorderLevel</td>
         <td>@Model.Discontinued</td>
         <td>@Model.Category.CategoryName</td>
-        <td>@Model.Supplier.ContactName</td>
+        <td>@Model.Supplier.CompanyName</td>
+        <td>
+        <a asp-action="Edit" asp-controller="Product" asp-route-id=@Model.ProductId class="btn btn-dark" role="button">Edit</a>
+        </td>
     </tr>
