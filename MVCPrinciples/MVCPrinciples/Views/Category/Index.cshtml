@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Category>
+
+    <div>
+    @foreach (var category in Model)
+    {
+        @await Html.PartialAsync("_CategoryCard", category)
+    }
+</div>

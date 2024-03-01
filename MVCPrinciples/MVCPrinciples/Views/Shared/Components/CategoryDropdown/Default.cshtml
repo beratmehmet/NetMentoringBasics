@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Category>
+
+    @foreach (var category in Model)
+    {
+        if (ViewBag.id == category.CategoryId)
+        {
+            <option selected value=@category.CategoryId .>@category.CategoryName</option>
+        }
+        else
+        {
+            <option value=@category.CategoryId .>@category.CategoryName</option>
+        }
+
+    }

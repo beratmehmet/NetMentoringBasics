@@ -1,0 +1,67 @@
+﻿@model MVCPrinciples.Models.Product
+<h1>Create Product</h1>
+<fieldset>
+    <form asp-action="Create" asp-controller="Product">
+        <div asp-validation-summary="All" class="input-validation-error"></div>
+        <p>
+            <label asp-for="ProductName">Product Name</label>
+            <input asp-for="ProductName" class="form-control" placeholder="Product Name" />
+            <span asp-validation-for="ProductName"></span>
+        </p>
+
+        <p>
+            <label asp-for="QuantityPerUnit">Quantity Per Unit</label>
+            <input asp-for="QuantityPerUnit" class="form-control" placeholder="Quantitiy Per Unit" />
+            <span asp-validation-for="QuantityPerUnit"></span>
+        </p>
+
+        <p>
+            <label asp-for="UnitPrice">Unit Price</label>
+            <input asp-for="UnitPrice" class="form-control" placeholder="Unit Price" />
+            <span asp-validation-for="UnitPrice"></span>
+        </p>
+
+        <p>
+            <label asp-for="UnitsInStock">Units In Stock</label>
+            <input asp-for="UnitsInStock" class="form-control" placeholder="Units In Stock" />
+            <span asp-validation-for="UnitsInStock"></span>
+        </p>
+
+        <p>
+            <label asp-for="UnitsOnOrder">Units On Order</label>
+            <input asp-for="UnitsOnOrder" class="form-control" placeholder="Units On Order" />
+            <span asp-validation-for="UnitsOnOrder"></span>
+        </p>
+
+        <p>
+            <label asp-for="ReorderLevel">Reorder Level</label>
+            <input asp-for="ReorderLevel" class="form-control" placeholder="Reorder Level" />
+            <span asp-validation-for="ReorderLevel"></span>
+        </p>
+
+        <p>
+            <label asp-for="Discontinued" >Discontinued</label>
+            <input asp-for="Discontinued" class="form-check-input" placeholder="Discontinued" />
+            <span asp-validation-for="Discontinued"></span>
+        </p>
+
+        <p>
+            <label asp-for="CategoryId">Category</label>
+            <select asp-for="CategoryId" class="form-select" placeholder="Category">
+                @await Component.InvokeAsync("CategoryDropdown")
+            </select>
+            <span asp-validation-for="CategoryId"></span>
+        </p>
+        
+        <p>
+            <label asp-for="SupplierId">Supplier</label>
+            <select asp-for="SupplierId" class="form-select" placeholder="Supplier">
+                @await Component.InvokeAsync("SupplierDropdown")
+            </select>
+            <span asp-validation-for="SupplierId"></span>
+        </p>
+        <p>
+            <button type="submit" class="btn btn-dark">Create Product</button>
+        </p>
+    </form>
+</fieldset>
